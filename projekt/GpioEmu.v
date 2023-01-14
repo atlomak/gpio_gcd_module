@@ -29,11 +29,10 @@ reg clk_en;
 reg start;
 reg [31:0] A1;
 reg [31:0] A2,
-reg done;
-
-reg [31:0] result
+reg [31:0] W
+reg [31: 0] S;
 reg [31:0] a,b;
-reg working;
+
 
 always@(posedge clk, posedge reset)
 	if(reset) begin
