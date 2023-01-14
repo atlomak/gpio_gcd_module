@@ -67,7 +67,31 @@ always@(posedge clk, posedge reset)
 				end
 		end
 	end
-				end
+
+// ADDRESS ACCESS LOGIC
+
+	always@(posedge srd) begin
+		if(saddress == 16'hf8) begin
+			sdata_out_s <= A1;  // A1 
+		end
+		if(saddress == 16'hfc) begin
+			sdata_out_s <= A2; // A2
+		end
+		if(saddress == 16'h100) begin
+			sdata_out_s <= W;	// W
+		end
+		if(saddress == 16'h104) begin
+			sdata_out_s <= S; // S
 		end
 	end
+	
+	always@(posedge swr) begin
+		if(saddress == 16'hf8) begin
+			A1 <= sdata_in;
+		end
+		if(saddress == 16'hfc) begin
+			A2 <= sdata_in;
+		end
+	end
+
 endmodule
