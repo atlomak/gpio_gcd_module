@@ -1,3 +1,5 @@
+/* verilator lint_off UNUSED */
+/* verilator lint_off MULTIDRIVEN */
 module gpioemu(
 	n_reset, 							//magistrala z CPU
 	saddress[15:0], srd, swr,
@@ -9,7 +11,7 @@ module gpioemu(
 
 // Interface
 
-input reset;
+input n_reset;
 input srd;
 input swr;
 input gpio_latch;
@@ -25,48 +27,45 @@ output [31:0] gpio_in_s_insp;
 
 // GCD REGs
 
-reg clk_en;
 reg start;
 reg [31:0] A1;
-reg [31:0] A2,
-reg [31:0] W
-reg [31: 0] S;
+reg [31:0] A2;
+reg [31:0] W;
+reg [31:0] S;
 reg [31:0] a,b;
 reg [31:0] sdata_out_s;
 
 
-always@(posedge clk, posedge reset)
-	if(reset) begin
+always@(posedge clk, posedge n_reset)
+	if(n_reset) begin
 		S[3] <= 1'b0;
 		a <= 32'b0;
 		b <= 32'b0;
 		W <= 32'b0;
 	end
 	else begin
-		if(clk_en) begin
-			if(!S[3]) begin
-				if(start) begin
-					S[3] <= 1'b1;
-					a <= A1;
-					b <= A2;
-				end
-				else begin
-					S[3] <= 1'b0;
-				end
+		if(!S[3]) begin
+			if(start) begin
+				S[3] <= 1'b1;
+				a <= A1;
+				b <= A2;
 			end
-			else
-				if(a != b) begin
-					S[3] <= 1'b1;
-					if(a < b)
-						b <= b - a;
-					else	
-						a <= a - b;
-				end
-				else begin
-					W <= a;
-					S[3] <= 1'b0;
-				end
+			else begin
+				S[3] <= 1'b0;
+			end
 		end
+		else
+			if(a != b) begin
+				S[3] <= 1'b1;
+				if(a < b)
+					b <= b - a;
+				else	
+					a <= a - b;
+			end
+			else begin
+				W <= a;
+				S[3] <= 1'b0;
+			end
 	end
 
 // ADDRESS ACCESS LOGIC
@@ -76,7 +75,8 @@ always@(posedge clk, posedge reset)
 			sdata_out_s <= A1;  // A1 
 		end
 		if(saddress == 16'hfc) begin
-			sdata_out_s <= A2; // A2
+			sdata_out_s <= A2; // A2 and start
+			start <= 1'b1;
 		end
 		if(saddress == 16'h100) begin
 			sdata_out_s <= W;	// W
