@@ -4,7 +4,7 @@ module gpioemu(
 	sdata_in[31:0], sdata_out[31:0],
 	gpio_in[31:0], gpio_latch, 			//styk z GPIO - in
 	gpio_out[31:0], 					//styk z GPIO = out
-	clk, 								//sygnał opcjonalny - zegar 1KHz
+	clk, 								
 	gpio_in_s_insp[31:0]);
 
 // Interface
@@ -32,6 +32,7 @@ reg [31:0] A2,
 reg [31:0] W
 reg [31: 0] S;
 reg [31:0] a,b;
+reg [31:0] sdata_out_s;
 
 
 always@(posedge clk, posedge reset)
@@ -93,5 +94,8 @@ always@(posedge clk, posedge reset)
 			A2 <= sdata_in;
 		end
 	end
+
+// BINDINGS
+assign sdata_out = sdata_out_s;
 
 endmodule
