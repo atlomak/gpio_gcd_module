@@ -35,12 +35,19 @@ reg [31:0] S;
 reg [31:0] a,b;
 reg [31:0] sdata_out_s;
 
+// OPS COUNTER REG
+
+reg [31:0] counter;
+
+
+
 always@(posedge n_reset)
 	begin
 		S <= 32'b0;
 		a <= 32'b0;
 		b <= 32'b0;
 		W <= 32'b0;
+		counter <= 32'b0;
 	end
 always@(posedge clk)
 	begin
@@ -93,10 +100,11 @@ always@(posedge clk)
 		if(saddress == 16'hfc) begin
 			A2 <= sdata_in;
 			start <= 1'b1;
+			counter <= counter + 1'b1;
 		end
 	end
 
 // BINDINGS
 assign sdata_out = sdata_out_s;
-
+assign gpio_out = counter;
 endmodule
