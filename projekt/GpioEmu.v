@@ -76,7 +76,7 @@ always@(posedge clk)
 			sdata_out_s <= A1;  // A1 
 		end
 		if(saddress == 16'hfc) begin
-			sdata_out_s <= A2; // A2 and start
+			sdata_out_s <= A2; // A2
 		end
 		if(saddress == 16'h100) begin
 			sdata_out_s <= W;	// W
