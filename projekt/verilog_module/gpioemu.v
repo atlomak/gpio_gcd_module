@@ -25,6 +25,10 @@ output [31:0] sdata_out;
 output [31:0] gpio_out;
 output [31:0] gpio_in_s_insp;
 
+// DEBUG REGs
+
+reg [31:0] gpio_in_s;
+
 // GCD REGs
 
 reg start;
@@ -104,7 +108,14 @@ always@(posedge clk)
 		end
 	end
 
+always@(posedge gpio_latch)
+	begin
+		gpio_in_s <= gpio_in;
+	end
+
 // BINDINGS
 assign sdata_out = sdata_out_s;
 assign gpio_out = counter;
+assign gpio_in_s_insp = gpio_in_s;
+
 endmodule
