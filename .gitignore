@@ -1,2 +1,10 @@
 projekt/GpioEmu.vvp
 projekt/GpioEmu.vcd
+projekt/sykom.dts
+projekt/sykom.dtb
+projekt/rootfs.ext2
+projekt/qemu-system-riscv32-sykt
+projekt/libgpioemu.a
+projekt/Image
+projekt/fw_jump.elf
+projekt/compilation_log.txt
