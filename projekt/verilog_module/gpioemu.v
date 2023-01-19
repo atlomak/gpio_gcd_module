@@ -95,6 +95,9 @@ always@(posedge clk)
 		if(saddress == 16'h104) begin
 			sdata_out_s <= S; // S
 		end
+		if(saddress == 16'h108) begin
+			sdata_out_s <= 32'h12345678;	// DEBUG
+		end
 	end
 	
 	always@(posedge swr) begin
