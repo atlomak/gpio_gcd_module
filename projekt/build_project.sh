@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ ! -f "qemu-system-riscv32-sykt" ]; then
     makeQemuGpioEmu ./verilog_module/gpioemu.v && \
-    make_busybox_kernel_module 
+    make_busybox_compile main.c && \
     ./qemu-system-riscv32-sykt -M sykt -nographic \
     -bios fw_jump.elf \
     -kernel Image \
@@ -11,7 +11,7 @@ if [ ! -f "qemu-system-riscv32-sykt" ]; then
     -netdev user,id=net0 -device virtio-net-device,netdev=net0
 else
     echo "qemu-system-riscv32-sykt already exists, skipping makeQemuGpioEmu"
-    make_busybox_compile main.c
+    make_busybox_compile main.c && \
     ./qemu-system-riscv32-sykt -M sykt -nographic \
     -bios fw_jump.elf \
     -kernel Image \
