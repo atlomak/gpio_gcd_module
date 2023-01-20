@@ -10,7 +10,7 @@ MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Andrzej Tlomak");
 MODULE_DESCRIPTION("Kernel module for sykom 2022Z");
 
-#define BUF_SIZE    100
+#define BUF_SIZE    1024
 #define SYKT_MEM_SIZE 16
 #define SYKT_EXIT (0x3333)
 #define SYKT_EXIT_CODE (0x7F)
