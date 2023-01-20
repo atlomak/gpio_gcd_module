@@ -52,14 +52,28 @@ void read_status() {
 
 // Functions to write
 void write_a1(char* value) {
+	int fd_in = 0;
 	char buffer[MAX_BUFFER]; 
-    int fd_in = open(SYSFS_FILE_ARG1, O_WRONLY);
+    fd_in = open(SYSFS_FILE_ARG1, O_WRONLY | O_APPEND);
+	if(fd_in < 0){ 
+		printf("Main write_a1 - error: %d\n", errno); 
+		exit(1); 
+	}
+	snprintf(buffer, MAX_BUFFER, value);
     int n = write(fd_in, buffer, strlen(buffer));
+	close(fd_in);
 }
 void write_a2(char* value) {
+	int fd_in = 0;
 	char buffer[MAX_BUFFER]; 
-    int fd_in = open(SYSFS_FILE_ARG2, O_WRONLY);
+    fd_in = open(SYSFS_FILE_ARG2, O_WRONLY | O_APPEND);
+	if(fd_in < 0){ 
+		printf("Main write_a2 - error: %d\n", errno); 
+		exit(1); 
+	}
+	snprintf(buffer, MAX_BUFFER, value);
     int n = write(fd_in, buffer, strlen(buffer));
+	close(fd_in);
 }
 
 
@@ -67,24 +81,45 @@ void write_a2(char* value) {
 
 void test_GCD() {
 
-	printf("\nGCD TEST FOR VALUES %s, %s\n", "10", "C");
-	write_a1("10");
-	write_a2("C");
+	char *a1 = "34";
+	char *a2 = "66";
+	printf("\nGCD TEST FOR VALUES %s, %s\n", a1, a2);
+	read_status();
+	write_a1(a1);
+	write_a2(a2);
+	sleep(5);
 	read_result();
-
-	printf("\nGCD TEST FOR VALUES %s, %s\n", "3", "9");
-	write_a1("3");
-	write_a2("9");
+	char *a3 = "39";
+	char *a4 = "3";
+	printf("\nGCD TEST FOR VALUES %s, %s\n", a3, a4);
+	read_status();
+	write_a1(a3);
+	write_a2(a4);
+	sleep(5);
 	read_result();
-    
-    printf("\nGCD TEST FOR VALUES %s, %s\n", "2", "4");
-	write_a1("2");
-	write_a2("4");
+	char *a5 = "120";
+	char *a6 = "93";
+    printf("\nGCD TEST FOR VALUES %s, %s\n", a5, a6);
+	read_status();
+	write_a1(a5);
+	write_a2(a6);
+	sleep(5);
 	read_result();
-
-    printf("\nGCD TEST FOR VALUES %s, %s\n", "4", "C1");
-	write_a1("4");
-	write_a2("C1");
+	char *a7 = "21";
+	char *a8 = "3";
+    printf("\nGCD TEST FOR VALUES %s, %s\n", a7, a8);
+	read_status();
+	write_a1(a7);
+	write_a2(a8);
+	sleep(5);
+	read_result();
+	char *a9 = "21";
+	char *a10 = "77";
+    printf("\nGCD TEST FOR VALUES %s, %s\n", a9, a10);
+	read_status();
+	write_a1(a9);
+	write_a2(a10);
+	sleep(5);
 	read_result();
 }
 
