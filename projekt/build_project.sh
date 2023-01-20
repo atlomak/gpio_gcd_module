@@ -10,8 +10,8 @@ if [ ! -f "qemu-system-riscv32-sykt" ]; then
     -device virtio-blk-device,drive=hd0 \
     -netdev user,id=net0 -device virtio-net-device,netdev=net0
 else
-    make_busybox_kernel_module
     echo "qemu-system-riscv32-sykt already exists, skipping makeQemuGpioEmu"
+    make_busybox_compile main.c
     ./qemu-system-riscv32-sykt -M sykt -nographic \
     -bios fw_jump.elf \
     -kernel Image \
